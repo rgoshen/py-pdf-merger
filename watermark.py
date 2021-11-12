@@ -12,12 +12,10 @@ input_pdf = PyPDF2.PdfFileReader(open(sys.argv[1], 'rb'))
 watermark_pdf = PyPDF2.PdfFileReader(open(sys.argv[2], 'rb'))
 output = PyPDF2.PdfFileWriter()
 
-watermark_page = watermark_pdf.getPage(0)
-
 for i in range(input_pdf.numPages):
     pdf_page = input_pdf.getPage(i)
-    pdf_page.mergePage(watermark_page)
+    pdf_page.mergePage(watermark_pdf.getPage(0))
     output.addPage(pdf_page)
 
-with open(f'{output_path}/marked_{timestr}.pdf', 'wb') as marked_file:
+with open(f'{output_path}/watermarked_{timestr}.pdf', 'wb') as marked_file:
     output.write(marked_file)
